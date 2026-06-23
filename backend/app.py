@@ -16,10 +16,10 @@ from sentence_transformers import SentenceTransformer
 embed = SentenceTransformer("all-MiniLM-L6-v2")
 
 
-app=FastAPI()
+app = FastAPI()
 
-UPLOAD_DIR="uploads"
-DOCUMENT_TEXT=""
+UPLOAD_DIR = "uploads"
+DOCUMENT_TEXT = ""
 
 os.makedirs(
     UPLOAD_DIR,
@@ -90,14 +90,21 @@ question:str
     print("\nRetrieved:\n")
     print(context)
 
-    result=answer(
+    result = answer(
         question,
         context
     )
 
     return {
-
-        "answer":
-        result
-
+        "answer": result
     }
+
+
+@app.get("/summary")
+def summary():
+    if not DOCUMENT_TEXT:
+        return {"answer": "No document is loaded. Upload a PDF first."}
+
+    prompt = "Please summarize the uploaded document in a concise and helpful way."
+    result = answer(prompt, DOCUMENT_TEXT)
+    return {"answer": result}
