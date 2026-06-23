@@ -1,4 +1,11 @@
 .venv/
-__pycache__/
-sample.pdf
 venv/
+__pycache__/
+
+backend/storage/
+backend/uploads/
+
+*.pdf
+*.sqlite3
+*.bin
+*.pickle
